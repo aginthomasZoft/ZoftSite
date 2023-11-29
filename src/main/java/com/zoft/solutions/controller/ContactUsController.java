@@ -1,20 +1,28 @@
 package com.zoft.solutions.controller;
 
 
-import com.zoft.solutions.entity.ContactUs;
+import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.zoft.solutions.entity.ContactUs;
 import com.zoft.solutions.service.ContactUsService;
 
 import io.swagger.annotations.ApiOperation;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
-import java.util.Map;
-
 @RestController
-@RequestMapping("/ContactUs")
+@RequestMapping("/contactUs")
 @CrossOrigin
 public class ContactUsController {
 
@@ -23,36 +31,42 @@ public class ContactUsController {
 
 	    @PostMapping
 	    @ApiOperation(value="Store Contact details")
-	    public ContactUs addContactDetail(@RequestBody ContactUs contact) {
-	        return service.saveContactDetail(contact);
+	    public ResponseEntity<Object> addContactDetail(@RequestBody ContactUs contact) {
+	        try {
+	        	ContactUs responce =  service.saveContactDetail(contact);
+	        	return new ResponseEntity<>(responce, HttpStatus.CREATED);
+    	    } catch (IllegalArgumentException e) {
+    	        return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+    	    }
 	    }
 
 	    @GetMapping
-	    @ApiOperation(value="Search Contact details")
+	    @ApiOperation(value="Get all contact details")
 	    public List<ContactUs> getAllContactDetails() {
 	        return service.getContactDetails();
 	    }
 
 	    @GetMapping("/{contactId}")
-	    @ApiOperation(value="Search By Id Contact details")
+	    @ApiOperation(value="Get contact details by id")
 	    public ContactUs getContactDetailById(@PathVariable int contactId) {
 	        return service.getContactDetailById(contactId);
 	    }
 
 
 	    @PutMapping("/{contactId}")
-	    @ApiOperation(value="Update By Id Contact details")
-	    public ContactUs updateContactDetailById(@PathVariable int contactId, @RequestBody ContactUs contact) {
-	       return service.updateContactDetail(contactId, contact);
+	    @ApiOperation(value="Update contact details by id")
+	    public ResponseEntity<Object> updateContactDetailById(@PathVariable int contactId, @RequestBody ContactUs contact) {
+	       try {
+	    	   ContactUs responce =  service.updateContactDetail(contactId, contact);
+	       return new ResponseEntity<>(responce, HttpStatus.CREATED);
+	    } catch (IllegalArgumentException e) {
+	        return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+	    }
 	    }
 
-	    @PatchMapping("/{contactId}")
-	    public ContactUs updateContactDetailFields(@PathVariable int contactId,@RequestBody Map<String, Object> fields){
-	        return service.updateContactDetailByFields(contactId,fields);
-	    }
 
 	    @DeleteMapping("/{contactId}")
-	    @ApiOperation(value="Delete Contact details")
+	    @ApiOperation(value="Delete contact details by id")
 	    public long deleteContactDetailById(@PathVariable int contactId) {
 	        return service.deleteContactDetail(contactId);
 	    }

@@ -3,6 +3,7 @@ package com.zoft.solutions.service;
 import com.zoft.solutions.entity.ContactUs;
 
 import com.zoft.solutions.respository.ContactRepository;
+import com.zoft.solutions.util.ValidationUtils;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,8 +21,14 @@ public class ContactUsService {
 	    private ContactRepository repository;
 
 
-	    public ContactUs saveContactDetail(ContactUs contact) {
-	        return repository.save(contact);
+	    public ContactUs saveContactDetail(ContactUs contactDetails) {
+	    	
+	    	List<String> validationErrors = ValidationUtils.validateEntity(contactDetails);
+
+	        if (!validationErrors.isEmpty()) {
+	            throw new IllegalArgumentException(String.join(", ", validationErrors));
+	        }
+	        return repository.save(contactDetails);
 	    }
 
 	    public List<ContactUs> getContactDetails() {
@@ -33,16 +40,21 @@ public class ContactUsService {
 	    }
 
 
-	    public ContactUs updateContactDetail(int contactId, ContactUs contactRequest) {
-	        // get the product from DB by id
-	        // update with new value getting from request
+	    public ContactUs updateContactDetail(int contactId, ContactUs updatedContactDetails) {
+	    	
+	    	List<String> validationErrors = ValidationUtils.validateEntity(updatedContactDetails);
+
+	        if (!validationErrors.isEmpty()) {
+	            throw new IllegalArgumentException(String.join(", ", validationErrors));
+	        }
+	        // updating with new value getting from request
 	    	ContactUs existingContact = repository.findById(contactId).get(); // DB
-	    	existingContact.setFullName(contactRequest.getFullName());
-	    	existingContact.setEmail(contactRequest.getEmail());
-	    	existingContact.setCompanyName(contactRequest.getCompanyName());
-	    	existingContact.setPhone(contactRequest.getPhone());
-	    	existingContact.setDesignation(contactRequest.getDesignation());
-	    	existingContact.setMessage(contactRequest.getMessage());
+	    	existingContact.setFullName(updatedContactDetails.getFullName());
+	    	existingContact.setEmail(updatedContactDetails.getEmail());
+	    	existingContact.setCompanyName(updatedContactDetails.getCompanyName());
+	    	existingContact.setPhone(updatedContactDetails.getPhone());
+	    	existingContact.setDesignation(updatedContactDetails.getDesignation());
+	    	existingContact.setMessage(updatedContactDetails.getMessage());
 	        return repository.save(existingContact);
 	    }
 

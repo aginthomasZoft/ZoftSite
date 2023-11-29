@@ -20,4 +20,13 @@ spring:
       hibernate:
         dialect: org.hibernate.dialect.MySQL5Dialect
         format_sql : true
-
+  mvc:
+    pathmatch:
+      matching:
+        strategy:ant-path-matcher
+        
+azure:
+  storage:
+    connection-string: DefaultEndpointsProtocol=https;AccountName=zswebblob1staging;AccountKey=QZZ32Khv0Ebh0t60/n/+2dbeLGgBxpnV0vF2TfJWC7B5jUYmnsYSxtMDzn8rIaZHvj+V2caIxwVQ+AStfnQ2UQ==;EndpointSuffix=core.windows.net
+  blob:
+    container-name: images

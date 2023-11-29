@@ -14,28 +14,60 @@ import static springfox.documentation.builders.PathSelectors.regex;
 @EnableSwagger2
 public class ZoftConfig {
 
-	@Bean
-	public Docket postsApi1() {
-		return new Docket(DocumentationType.SWAGGER_2).groupName("Zoftsolutions Blog").apiInfo(apiInfo()).select()
-				.paths(regex("/Blog.*")).build();
+    @Bean
+    Docket postsApiBlog() {
+		return new Docket(DocumentationType.SWAGGER_2).groupName("Zoftsolutions blog details").apiInfo(apiInfo()).select()
+				.paths(regex("/blogs.*")).build();
 	}
 
-	@Bean
-	public Docket postsApi2() {
-		return new Docket(DocumentationType.SWAGGER_2).groupName("Zoftsolutions Case Study").apiInfo(apiInfo()).select()
-				.paths(regex("/Case.*")).build();
+    @Bean
+    Docket postsApiCaseStudy() {
+		return new Docket(DocumentationType.SWAGGER_2).groupName("Zoftsolutions case study details").apiInfo(apiInfo()).select()
+				.paths(regex("/caseStudies.*")).build();
 	}
-	
-	@Bean
-	public Docket postsApi3() {
-		return new Docket(DocumentationType.SWAGGER_2).groupName("Zoftsolutions User Details").apiInfo(apiInfo()).select()
-				.paths(regex("/User.*")).build();
+
+
+    @Bean
+    Docket postsApiContactUs() {
+		return new Docket(DocumentationType.SWAGGER_2).groupName("Zoftsolutions contact us details").apiInfo(apiInfo()).select()
+				.paths(regex("/contactUs.*")).build();
 	}
-	
-	@Bean
-	public Docket postsApi4() {
-		return new Docket(DocumentationType.SWAGGER_2).groupName("Zoftsolutions ContactUs details").apiInfo(apiInfo()).select()
-				.paths(regex("/ContactUs.*")).build();
+
+    @Bean
+    Docket postsApiNewsLetter() {
+		return new Docket(DocumentationType.SWAGGER_2).groupName("Zoftsolutions news Letter details").apiInfo(apiInfo()).select()
+				.paths(regex("/newsLetter.*")).build();
+	}
+
+
+    @Bean
+    Docket postsApiLogin() {
+		return new Docket(DocumentationType.SWAGGER_2).groupName("Admin login details").apiInfo(apiInfo()).select()
+				.paths(regex("/login.*")).build();
+	}
+
+    @Bean
+    Docket postsApiCareers() {
+		return new Docket(DocumentationType.SWAGGER_2).groupName("Zoftsolutions careers details").apiInfo(apiInfo()).select()
+				.paths(regex("/careers.*")).build();
+	}
+
+    @Bean
+    Docket postsApiBanner() {
+		return new Docket(DocumentationType.SWAGGER_2).groupName("Zoftsolutions home banner details").apiInfo(apiInfo()).select()
+				.paths(regex("/banners.*")).build();
+	}
+
+    @Bean
+    Docket postsApiCompanyLogo() {
+		return new Docket(DocumentationType.SWAGGER_2).groupName("Zoftsolutions home company logo details").apiInfo(apiInfo()).select()
+				.paths(regex("/companyLogos.*")).build();
+	}
+
+    @Bean
+    Docket postsApiAboutUs() {
+		return new Docket(DocumentationType.SWAGGER_2).groupName("Zoftsolutions home aboutUs details").apiInfo(apiInfo()).select()
+				.paths(regex("/aboutUs.*")).build();
 	}
 	
 	private ApiInfo apiInfo() {
